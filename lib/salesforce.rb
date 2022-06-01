@@ -27,6 +27,8 @@ module Salesforce
       request = Net::HTTP::Post.new(uri.request_uri)
       response = http.request(request)
       JSON.parse(response.body)&.dig("access_token")
+    rescue Salesforce::Error => e
+      puts e.message
     end
 
     private
