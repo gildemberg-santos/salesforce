@@ -9,14 +9,20 @@ module Salesforce
   class Error < StandardError; end
 
   class OAuth
-    def initialize(client_id, client_secret, username, password, security_token,
-                   api_version = "v37.0")
+    def initialize(client_id, client_secret = nil, username = nil, password = nil, security_token = nil,
+                  redirect_uri = nil, api_version = "v37.0")
+
       @client_id = client_id
       @client_secret = client_secret
       @username = username
       @password = password
       @security_token = security_token
+      @redirect_uri = redirect_uri
       @api_version = api_version
+
+      raise Error, "Client ID is required" if blank? client_id
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def get_token
@@ -28,13 +34,32 @@ module Salesforce
       response = http.request(request)
       JSON.parse(response.body)&.dig("access_token")
     rescue Salesforce::Error => e
-      puts e.message
+      raise e
+    end
+
+    def authorize_url
+      raise Error, "Redirect URI is required" if blank? @redirect_uri
+
+      "https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=#{@client_id}&redirect_uri=#{@redirect_uri}"
+    rescue Salesforce::Error => e
+      raise e
     end
 
     private
 
     def oauth_url
+      raise Error, "Client secret is required" if blank? @client_secret
+      raise Error, "Username is required" if blank? @username
+      raise Error, "Password is required" if blank? @password
+      raise Error, "Security token is required" if blank? @security_token
+
       "https://login.salesforce.com/services/oauth2/token?grant_type=password&client_id=#{@client_id}&client_secret=#{@client_secret}&username=#{@username}&password=#{@password}#{@security_token}"
+    rescue Salesforce::Error => e
+      raise e
+    end
+
+    def blank?(value)
+      value.nil? || value.empty? || value.to_s.strip.empty?
     end
   end
 end
