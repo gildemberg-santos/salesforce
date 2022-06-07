@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require 'salesforce/error'
-require 'salesforce/requests'
-
 module Salesforce
-  class OAuthCode < OAuth
+  # Salesforce::OauthCode is class for Salesforce OAuth code.
+  class OAuthCode < Salesforce::OAuth
     attr_reader :authorize
     attr_writer :code
 
