@@ -18,6 +18,7 @@ module Salesforce
       raise Salesforce::Error, 'Username is required' if blank? @username
       raise Salesforce::Error, 'Password is required' if blank? @password
       raise Salesforce::Error, 'Security token is required' if blank? @security_token
+      raise Salesforce::Error, 'API version is required' if blank? @api_version
     rescue Salesforce::Error => e
       raise e
     end

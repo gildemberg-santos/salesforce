@@ -15,6 +15,7 @@ module Salesforce
       raise Salesforce::Error, 'Client ID is required' if blank? @client_id
       raise Salesforce::Error, 'Client secret is required' if blank? @client_secret
       raise Salesforce::Error, 'Redirect URI is required' if blank? @redirect_uri
+      raise Salesforce::Error, 'API version is required' if blank? @api_version
 
       endpoint_authorize
     rescue Salesforce::Error => e
