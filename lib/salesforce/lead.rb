@@ -37,7 +37,7 @@ module Salesforce
       fields = json&.dig('fields')
       @fields = {}
       fields.map do |field|
-        @fields[field['name']] = {"type" => field['type'], "title" => field['label']}
+        @fields.merge!({field['name'] =>{"type" => "string", "title" => field['label']}})
       end
       nil
     rescue Salesforce::Error => e
