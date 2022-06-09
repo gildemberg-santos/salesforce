@@ -35,9 +35,9 @@ module Salesforce
       response.get
       json = response.json
       fields = json&.dig('fields')
-      @fields = []
+      @fields = {}
       fields.map do |field|
-        @fields.push({ label: field['label'], name: field['name'], type: field['type'] })
+        @fields[field['name']] = {"type" => field['type'], "title" => field['label']}
       end
       nil
     rescue Salesforce::Error => e
