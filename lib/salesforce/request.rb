@@ -19,8 +19,10 @@ module Salesforce
       request['Authorization'] = "Bearer #{@access_token}" unless blank? @access_token
       request['Content-Type'] = 'application/json'
       request.body = payload.to_json unless blank? payload
-      @json = JSON.parse(http.request(request).body)
-      @status_code = http.request(request).code
+      responde = http.request(request)
+
+      @json = JSON.parse(responde.body)
+      @status_code = responde.code
     rescue Salesforce::Error => e
       raise e
     end
@@ -33,8 +35,10 @@ module Salesforce
       request = Net::HTTP::Get.new(uri.request_uri)
       request['Authorization'] = "Bearer #{@access_token}" unless blank? @access_token
       request['Content-Type'] = 'application/json'
-      @json = JSON.parse(http.request(request).body)
-      @status_code = http.request(request).code
+      responde = http.request(request)
+
+      @json = JSON.parse(responde.body)
+      @status_code = responde.code
     rescue Salesforce::Error => e
       raise e
     end
