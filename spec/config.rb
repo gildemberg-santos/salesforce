@@ -7,6 +7,7 @@ require 'salesforce/error'
 require 'salesforce/request'
 require 'salesforce/oauth'
 require 'salesforce/oauth_code'
+require 'salesforce/lead'
 
 config_yml = YAML.load_file(File.join('./spec', 'config.yaml'))
 CLIENT_ID = config_yml['client_id']
