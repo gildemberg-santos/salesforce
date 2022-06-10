@@ -4,7 +4,7 @@ module Salesforce
   # Salesforce::Lead is Salesforce lead class.
   class Lead < Salesforce::Base
     attr_reader :fields
-    attr_reader :requered_fields
+    attr_reader :required_fields
 
     def initialize(access_token, instance_url, api_version = API_VERSION)
       @access_token = access_token
@@ -37,7 +37,7 @@ module Salesforce
       json = response.json
       fields = json&.dig('fields')
       @fields = {}
-      @requered_fields = ["Company", "LastName"]
+      @required_fields = ["Company", "LastName"]
       fields.map do |field|
         @fields.merge!({field['name'] =>{"type" => "string", "title" => field['label']}})
       end
