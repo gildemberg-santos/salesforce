@@ -40,18 +40,20 @@ module Salesforce
       @fields = {}
       @required_fields = %w[Company LastName]
       fields.map do |field|
-        next unless field['createable']
+        next unless field['createable'] || field['type'] != 'boolean'
 
         type = 'string'
-        type = 'boolean' if field['type'] == 'boolean'
+
         # TODO: Frontend typing issues
         # type = field['type']
         # type_string = %w[textarea picklist phone email url]
         # type_number = %w[double currency]
         # type_interger = %w[int reference]
+        # type_boolean = %w[boolean]
         # type = 'string' if type_string.include? type
         # type = 'number' if type_number.include? type
         # type = 'integer' if type_interger.include? type
+        # type = 'boolean' if type_boolean.include? type
         @fields.merge!({ field['name'] => { 'type' => type, 'title' => field['label'] } })
       end
       nil

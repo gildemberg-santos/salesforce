@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Salesforce
-  VERSION = '0.1.10'
+  VERSION = '0.1.11'
   API_VERSION = 'v54.0'
 end
