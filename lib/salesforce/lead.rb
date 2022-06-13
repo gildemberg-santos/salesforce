@@ -40,7 +40,7 @@ module Salesforce
       @fields = {}
       @required_fields = %w[Company LastName]
       fields.map do |field|
-        type_reject = %w[boolean date datetime]
+        type_reject = %w[boolean date datetime reference]
         next unless field['createable'] || !type_reject.include?(field['type'])
 
         type = 'string'
