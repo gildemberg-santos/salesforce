@@ -22,7 +22,7 @@ module Salesforce
       responde = http.request(request)
 
       @json = JSON.parse(responde.body)
-      @status_code = responde.code
+      @status_code = responde.code.to_i
     rescue Salesforce::Error => e
       raise e
     end
@@ -38,7 +38,7 @@ module Salesforce
       responde = http.request(request)
 
       @json = JSON.parse(responde.body)
-      @status_code = responde.code
+      @status_code = responde.code.to_i
     rescue Salesforce::Error => e
       raise e
     end

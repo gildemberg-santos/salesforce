@@ -3,8 +3,7 @@
 module Salesforce
   # Salesforce::Lead is Salesforce lead class.
   class Lead < Salesforce::Base
-    attr_reader :fields
-    attr_reader :required_fields
+    attr_reader :fields, :required_fields
 
     def initialize(access_token, instance_url, api_version = API_VERSION)
       @access_token = access_token
@@ -23,6 +22,8 @@ module Salesforce
       response = Salesforce::Request.new(endpoint_send)
       response.access_token = @access_token
       response.post(payload)
+      raise Salesforce::Error, response.json[0]['message'] if response.status_code != 201
+
       response.json
     rescue Salesforce::Error => e
       raise e
@@ -37,9 +38,11 @@ module Salesforce
       json = response.json
       fields = json&.dig('fields')
       @fields = {}
-      @required_fields = ["Company", "LastName"]
+      @required_fields = %w[Company LastName]
       fields.map do |field|
-        @fields.merge!({field['name'] =>{"type" => "string", "title" => field['label']}})
+        next unless field['createable']
+
+        @fields.merge!({ field['name'] => { 'type' => field['type'], 'title' => field['label'] } })
       end
       nil
     rescue Salesforce::Error => e
