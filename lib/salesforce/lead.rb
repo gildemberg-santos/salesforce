@@ -43,6 +43,7 @@ module Salesforce
         next unless field['createable']
 
         type = 'string'
+        type = 'boolean' if field['type'] == 'boolean'
         # TODO: Frontend typing issues
         # type = field['type']
         # type_string = %w[textarea picklist phone email url]
