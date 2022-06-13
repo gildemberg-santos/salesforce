@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../config'
 
 describe Salesforce::Lead do
@@ -9,13 +11,25 @@ describe Salesforce::Lead do
 
   it { expect(@lead.fields).not_to eq nil }
 
-  it { expect(@lead.requered_fields).to eq ["Company", "LastName"] }
+  it { expect(@lead.required_fields).to eq %w[Company LastName] }
 
-  it { expect(@lead.send({})[0]["message"]).to eq "Required fields are missing: [LastName, Company]"}
+  it {
+    expect do
+      @lead.send({})
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Required fields are missing: [LastName, Company]')))
+  }
 
-  it { expect(@lead.send({"Company" => "Test"})[0]["message"]).to eq "Required fields are missing: [LastName]" }
+  it {
+    expect do
+      @lead.send({ 'Company' => 'Test' })
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Required fields are missing: [LastName]')))
+  }
 
-  it { expect(@lead.send({"LastName" => "Test"})[0]["message"]).to eq "Required fields are missing: [Company]" }
+  it {
+    expect do
+      @lead.send({ 'LastName' => 'Test' })
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Required fields are missing: [Company]')))
+  }
 
-  it { expect(@lead.send({"Company" => "Test", "LastName" => "Test"})["success"]).to eq true }
+  it { expect(@lead.send({ 'Company' => 'Test', 'LastName' => 'Test' })['success']).to eq true }
 end

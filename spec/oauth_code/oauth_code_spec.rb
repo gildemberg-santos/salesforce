@@ -1,20 +1,34 @@
+# frozen_string_literal: true
+
 require_relative '../config'
 
 describe Salesforce::OAuthCode do
   it 'Pass the client_id null' do
-    expect { Salesforce::OAuthCode.new(nil, CLIENT_SECRET, REDIRECT_URI, API_VERSION) }.to raise_error(an_instance_of(Salesforce::Error).and having_attributes(message: 'Client ID is required'))
+    expect do
+      Salesforce::OAuthCode.new(nil, CLIENT_SECRET, REDIRECT_URI,
+                                API_VERSION)
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Client ID is required')))
   end
 
   it 'Pass the client_secret null' do
-    expect { Salesforce::OAuthCode.new(CLIENT_ID, nil, REDIRECT_URI, API_VERSION) }.to raise_error(an_instance_of(Salesforce::Error).and having_attributes(message: 'Client secret is required'))
+    expect do
+      Salesforce::OAuthCode.new(CLIENT_ID, nil, REDIRECT_URI,
+                                API_VERSION)
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Client secret is required')))
   end
 
   it 'Pass the redirect_uri null' do
-    expect { Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, nil, API_VERSION) }.to raise_error(an_instance_of(Salesforce::Error).and having_attributes(message: 'Redirect URI is required'))
+    expect do
+      Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, nil,
+                                API_VERSION)
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Redirect URI is required')))
   end
 
   it 'Pass the api_version null' do
-    expect { Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, nil) }.to raise_error(an_instance_of(Salesforce::Error).and having_attributes(message: 'API version is required'))
+    expect do
+      Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI,
+                                nil)
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'API version is required')))
   end
 
   it 'Call method call' do

@@ -41,10 +41,11 @@ module Salesforce
       @required_fields = %w[Company LastName]
       fields.map do |field|
         next unless field['createable']
+
         type = field['type']
-        type_string = %w(textarea picklist phone email url)
-        type_number = %w(double currency)
-        type_interger = %w(int reference)
+        type_string = %w[textarea picklist phone email url]
+        type_number = %w[double currency]
+        type_interger = %w[int reference]
         type = 'string' if type_string.include? type
         type = 'number' if type_number.include? type
         type = 'integer' if type_interger.include? type
