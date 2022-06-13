@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    salesforce (0.1.11)
+    salesforce (0.1.12)
 
 GEM
   remote: https://rubygems.org/
