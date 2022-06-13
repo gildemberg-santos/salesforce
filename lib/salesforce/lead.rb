@@ -42,13 +42,15 @@ module Salesforce
       fields.map do |field|
         next unless field['createable']
 
-        type = field['type']
-        type_string = %w[textarea picklist phone email url]
-        type_number = %w[double currency]
-        type_interger = %w[int reference]
-        type = 'string' if type_string.include? type
-        type = 'number' if type_number.include? type
-        type = 'integer' if type_interger.include? type
+        type = 'string'
+        # TODO: Frontend typing issues
+        # type = field['type']
+        # type_string = %w[textarea picklist phone email url]
+        # type_number = %w[double currency]
+        # type_interger = %w[int reference]
+        # type = 'string' if type_string.include? type
+        # type = 'number' if type_number.include? type
+        # type = 'integer' if type_interger.include? type
         @fields.merge!({ field['name'] => { 'type' => type, 'title' => field['label'] } })
       end
       nil
