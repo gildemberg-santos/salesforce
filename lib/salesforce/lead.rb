@@ -42,7 +42,7 @@ module Salesforce
       @required_fields = %w[Company LastName]
       fields.map do |field|
         @normalized_fields.merge!({ field['name'] => { 'type' => 'string', 'title' => field['label'] } })
-        @fields.merge!({ field['name'] => { 'type' => field['type'], 'title' => field['label'] } })
+        @fields.merge!({ field['name'] => field })
       end
       nil
     rescue Salesforce::Error => e
