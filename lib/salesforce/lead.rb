@@ -3,7 +3,7 @@
 module Salesforce
   # Salesforce::Lead is Salesforce lead class.
   class Lead < Salesforce::Base
-    attr_reader :fields, :required_fields
+    attr_reader :fields, :required_fields, :normalized_fields
 
     def initialize(access_token, instance_url, api_version = API_VERSION)
       @access_token = access_token
@@ -38,24 +38,11 @@ module Salesforce
       json = response.json
       fields = json&.dig('fields')
       @fields = {}
+      @normalized_fields = {}
       @required_fields = %w[Company LastName]
       fields.map do |field|
-        type_reject = %w[boolean date datetime reference]
-        next if field['createable'] == false || type_reject.include?(field['type'])
-
-        type = 'string'
-
-        # TODO: Frontend typing issues
-        # type = field['type']
-        # type_string = %w[textarea picklist phone email url]
-        # type_number = %w[double currency]
-        # type_interger = %w[int reference]
-        # type_boolean = %w[boolean]
-        # type = 'string' if type_string.include? type
-        # type = 'number' if type_number.include? type
-        # type = 'integer' if type_interger.include? type
-        # type = 'boolean' if type_boolean.include? type
-        @fields.merge!({ field['name'] => { 'type' => type, 'title' => field['label'] } })
+        @normalized_fields.merge!({ field['name'] => { 'type' => 'string', 'title' => field['label'] } })
+        @fields.merge!({ field['name'] => { 'type' => field['type'], 'title' => field['label'] } })
       end
       nil
     rescue Salesforce::Error => e
