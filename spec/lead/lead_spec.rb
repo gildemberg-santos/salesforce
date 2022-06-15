@@ -32,4 +32,6 @@ describe Salesforce::Lead do
   }
 
   it { expect(@lead.send({ 'Company' => 'Test', 'LastName' => 'Test' })['success']).to eq true }
+
+  it { expect(@lead.send({ 'Company' => 'Empy', 'LastName' => ' ' })['success']).to eq true }
 end
