@@ -7,3 +7,5 @@
 /spec/reports/
 /tmp/
 spec/config.yaml
+log/salesforce.log
+salesforce*.gem

@@ -3,5 +3,15 @@
 module Salesforce
   VERSION = '0.1.15'
   API_VERSION = 'v54.0'
-  TIMEZONE = "America/Sao_Paulo"
+  TIMEZONE = 'America/Sao_Paulo'
+
+  @debug = false
+
+  def self.debug=(value)
+    @debug = value
+  end
+
+  def self.debug?
+    @debug
+  end
 end

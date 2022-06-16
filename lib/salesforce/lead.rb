@@ -20,9 +20,13 @@ module Salesforce
     end
 
     def send(payload)
+      raise Salesforce::Error, 'Payload is required' if blank? payload
+
       response = Salesforce::Request.new(endpoint_send)
       response.access_token = @access_token
       payload = normalizer(payload)
+      raise Salesforce::Error, 'The payload is in mandatory shipping' if blank? payload
+
       response.post(payload)
       raise Salesforce::Error, response.json[0]['message'] if response.status_code != 201
 
@@ -118,7 +122,8 @@ module Salesforce
     def converter(payload)
       payload.each do |key, value|
         type = @fields[key]['type']
-        payload[key] = parse_datetime(value) if type == 'datetime' || type == 'date'
+        payload[key] = parse_datetime(value) if type == 'datetime'
+        payload[key] = parse_datetime(value) if type == 'date'
         payload[key] = parse_multipicklist(value) if type == 'multipicklist'
         payload[key] = value.to_f if %w[currency double].include?(type)
         payload[key] = value.to_i if type == 'int'

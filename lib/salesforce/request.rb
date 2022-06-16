@@ -7,7 +7,11 @@ module Salesforce
     attr_writer :access_token
 
     def initialize(url)
+      raise Salesforce::Error, 'URL is required' if blank? url
+
       @url = url
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def post(payload = nil)
@@ -23,6 +27,8 @@ module Salesforce
 
       @json = JSON.parse(responde.body)
       @status_code = responde.code.to_i
+
+      raise Salesforce::Error, @json[0]['message'] if @status_code != 201 && @status_code != 200
     rescue Salesforce::Error => e
       raise e
     end
@@ -39,6 +45,8 @@ module Salesforce
 
       @json = JSON.parse(responde.body)
       @status_code = responde.code.to_i
+
+      raise Salesforce::Error, @json[0]['message'] if @status_code != 200
     rescue Salesforce::Error => e
       raise e
     end
