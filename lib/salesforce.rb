@@ -3,7 +3,8 @@
 require 'uri'
 require 'json'
 require 'net/http'
-require 'time'
+require 'active_support/time'
+require 'logger'
 
 # Salesforce is integration with Salesforce API.
 module Salesforce; end

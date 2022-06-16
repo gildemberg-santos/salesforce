@@ -5,9 +5,10 @@ module Salesforce
   class Lead < Salesforce::Base
     attr_reader :fields, :required_fields, :normalized_fields
 
-    def initialize(access_token, instance_url, api_version = API_VERSION)
+    def initialize(access_token, instance_url, timezone = TIMEZONE, api_version = API_VERSION)
       @access_token = access_token
       @instance_url = instance_url
+      @current_timezone = timezone
       @api_version = api_version
 
       raise Salesforce::Error, 'Access token is required' if blank? @access_token
@@ -69,52 +70,77 @@ module Salesforce
       payload = split_name_field(payload)
       payload = mandatory_output_fields(payload)
       converter(payload)
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def to_b(object)
       !!object
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def remove_null_fields(payload)
       normalized_payload = {}
       payload.each do |key, value|
-        next if value.nil?
+        next if blank?(value)
 
         normalized_payload.merge!({ key => value })
       end
       normalized_payload
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def split_name_field(payload)
       full_name = payload['Name']
-      return payload if full_name.nil?
+      return payload if blank?(full_name)
 
       first_name, last_name = full_name.split(' ')
       payload['FirstName'] = first_name
       payload['LastName'] = last_name
       payload.delete('Name')
       payload
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def mandatory_output_fields(payload)
       last_name = payload['LastName']
       company = payload['Company']
-      payload['LastName'] = last_name.nil? ? 'data not found' : last_name
-      payload['Company'] = company.nil? ? 'data not found' : company
+      payload['LastName'] = blank?(last_name) ? 'data not found' : last_name
+      payload['Company'] =  blank?(company) ? 'data not found' : company
       payload
+    rescue Salesforce::Error => e
+      raise e
     end
 
     def converter(payload)
       payload.each do |key, value|
         type = @fields[key]['type']
-        payload[key] = Time.parse(value).strftime('%Y-%m-%dT%H:%M:%S%Z').to_s if type == 'datetime'
-        payload[key] = Time.parse(value).strftime('%Y-%m-%d').to_s if type == 'date'
-        payload[key] = value.gsub(',', ';') if type == 'multipicklist'
+        payload[key] = parse_datetime(value) if type == 'datetime' || type == 'date'
+        payload[key] = parse_multipicklist(value) if type == 'multipicklist'
         payload[key] = value.to_f if %w[currency double].include?(type)
         payload[key] = value.to_i if type == 'int'
         payload[key] = to_b(value) if type == 'boolean'
+        payload[key] = value.to_s if type == 'reference'
       end
       payload
+    rescue Salesforce::Error => e
+      raise e
+    end
+
+    def parse_datetime(datetime)
+      timezone = @current_timezone || TIMEZONE
+      Time.parse(datetime).in_time_zone(timezone).xmlschema.to_s
+    rescue Salesforce::Error => e
+      raise e
+    end
+
+    def parse_multipicklist(multipicklist)
+      multipicklist.gsub(',', ';').to_s
+    rescue Salesforce::Error => e
+      raise e
     end
   end
 end
