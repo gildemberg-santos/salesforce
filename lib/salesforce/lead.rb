@@ -5,29 +5,41 @@ module Salesforce
   class Lead < Salesforce::Base
     attr_reader :fields, :required_fields, :normalized_fields
 
-    def initialize(access_token, instance_url, timezone = TIMEZONE, api_version = API_VERSION)
-      @access_token = access_token
-      @instance_url = instance_url
-      @current_timezone = timezone
-      @api_version = api_version
+    # @param [String] access_token
+    # @param [String] refresh_token
+    # @param [String] instance_url
+    # @param [String] client_id
+    # @param [String] client_secret
+    # @param [String] timezone
+    # @param [String] api_version
+    def initialize(**kwargs)
+      @access_token = kwargs[:access_token]
+      @refresh_token = kwargs[:refresh_token]
+      @instance_url = kwargs[:instance_url]
+      @client_id = kwargs[:client_id] || Salesforce.client_id
+      @client_secret = kwargs[:client_secret] || Salesforce.client_secret
+      @current_timezone = kwargs[:timezone] || Salesforce.timezone
+      @api_version = kwargs[:api_version] || API_VERSION
 
       raise Salesforce::Error, 'Access token is required' if blank? @access_token
       raise Salesforce::Error, 'Instance URL is required' if blank? @instance_url
 
+      refresh_token! if kwargs[:refresh_token_call].present?
       field!
     rescue Salesforce::Error => e
       raise e
     end
 
+    # @param [Hash] payload
     def send(payload)
       raise Salesforce::Error, 'Payload is required' if blank? payload
 
-      response = Salesforce::Request.new(endpoint_send)
+      response = Salesforce::Request.new(url: endpoint_send)
       response.access_token = @access_token
       payload = normalizer(payload)
       raise Salesforce::Error, 'The payload is in mandatory shipping' if blank? payload
 
-      response.post(payload)
+      response.post(payload: payload)
       raise Salesforce::Error, response.json[0]['message'] if response.status_code != 201
 
       response.json
@@ -37,8 +49,22 @@ module Salesforce
 
     private
 
+    def refresh_token!
+      raise Salesforce::Error, 'Refresh token is required' if blank? @refresh_token
+
+      oauth = Salesforce::OAuthCodeRefreshToken.new(
+        client_id: @client_id,
+        client_secret: @client_secret,
+        refresh_token: @refresh_token
+      )
+
+      oauth.call
+      @access_token = oauth.access_token
+      @instance_url = oauth.instance_url
+    end
+
     def field!
-      response = Salesforce::Request.new(endpoint_field)
+      response = Salesforce::Request.new(url: endpoint_field)
       response.access_token = @access_token
       response.get
       json = response.json
