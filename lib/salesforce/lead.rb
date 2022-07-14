@@ -73,12 +73,19 @@ module Salesforce
       @normalized_fields = {}
       @required_fields = []
       fields.map do |field|
-        not_remove_fields = !%w[Name OwnerId Birthday__c].include?(field['name'])
+        not_remove_fields = !%w[Name].include?(field['name'])
+        remove_fields = %w[FirstName LastName].include?(field['name'])
         createable = field['createable'] == false
         remove_type = %w[boolean reference].include?(field['type'])
-        next if (not_remove_fields && createable) || (not_remove_fields && remove_type)
+        next if (not_remove_fields && createable) || (not_remove_fields && remove_type) || remove_fields
 
-        @normalized_fields.merge!({ field['name'] => { 'type' => 'string', 'title' => field['label'] } })
+        field_temp = { field['name'] => { 'type' => 'string', 'title' => field['label'] } }
+        if %w[multipicklist picklist].include?(field["type"]) and field['picklistValues'].length.positive?
+          field_temp[field['name']].merge!(create_enum(field['picklistValues']))
+        end
+
+        @required_fields.append(field['name']) if field['nillable'] == false
+        @normalized_fields.merge!(field_temp)
         @fields.merge!({ field['name'] => { 'type' => field['type'], 'title' => field['label'] } })
       end
       nil
@@ -98,7 +105,6 @@ module Salesforce
       payload = JSON.parse(payload.to_json)
       payload = remove_null_fields(payload)
       payload = split_name_field(payload)
-      payload = mandatory_output_fields(payload)
       converter(payload)
     rescue Salesforce::Error => e
       raise e
@@ -135,16 +141,6 @@ module Salesforce
       raise e
     end
 
-    def mandatory_output_fields(payload)
-      last_name = payload['LastName']
-      company = payload['Company']
-      payload['LastName'] = blank?(last_name) ? 'data not found' : last_name
-      payload['Company'] =  blank?(company) ? 'data not found' : company
-      payload
-    rescue Salesforce::Error => e
-      raise e
-    end
-
     def converter(payload)
       payload.each do |key, value|
         type = @fields[key]['type']
@@ -172,6 +168,15 @@ module Salesforce
       multipicklist.gsub(',', ';').to_s
     rescue Salesforce::Error => e
       raise e
+    end
+
+    def create_enum(picklistValues)
+      picklist = { 'enum' => [], 'default' => nil, 'showCustomVariables' => false }
+      picklistValues.map do |value|
+        picklist['default'] = value['value'] if value['defaultValue'] == true
+        picklist['enum'].append(value['value'])
+      end
+      picklist
     end
   end
 end
