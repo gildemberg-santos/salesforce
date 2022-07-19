@@ -5,48 +5,39 @@ require_relative '../config'
 describe Salesforce::OAuthCode do
   it 'Pass the client_id null' do
     expect do
-      Salesforce::OAuthCode.new(nil, CLIENT_SECRET, REDIRECT_URI,
-                                API_VERSION)
+      Salesforce::OAuthCode.new(client_id: nil, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
     end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Client ID is required')))
   end
 
   it 'Pass the client_secret null' do
     expect do
-      Salesforce::OAuthCode.new(CLIENT_ID, nil, REDIRECT_URI,
-                                API_VERSION)
+      Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: nil, redirect_uri: REDIRECT_URI)
     end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Client secret is required')))
   end
 
   it 'Pass the redirect_uri null' do
     expect do
-      Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, nil,
-                                API_VERSION)
+      Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: nil)
     end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Redirect URI is required')))
   end
 
-  it 'Pass the api_version null' do
-    expect do
-      Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI,
-                                nil)
-    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'API version is required')))
-  end
-
-  it 'Call method call' do
-    oauth_code = Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, API_VERSION)
+  it 'Pass the code not null' do
+    oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
     oauth_code.code = CODE
-    expect(oauth_code.call).to be_nil
+    expect(oauth_code.code).to_not be_nil
   end
 
   it 'Authorize endpoint' do
-    oauth_code = Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, API_VERSION)
+    oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
     expect(oauth_code.authorize).to_not be_nil
   end
 
   # it 'Access token and Instance url' do
-  #   oauth_code = Salesforce::OAuthCode.new(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, API_VERSION)
+  #   oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
   #   oauth_code.code = CODE
   #   oauth_code.call
   #   expect(oauth_code.access_token).to_not be_nil
+  #   expect(oauth_code.refresh_token).to_not be_nil
   #   expect(oauth_code.instance_url).to_not be_nil
   # end
 end

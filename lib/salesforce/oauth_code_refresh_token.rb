@@ -27,6 +27,7 @@ module Salesforce
       json = response.json
       @access_token = json&.dig('access_token')
       @instance_url = json&.dig('instance_url')
+      @issued_at = json&.dig('issued_at')
       nil
     rescue Salesforce::Error => e
       raise e

@@ -3,7 +3,7 @@
 module Salesforce
   # Salesforce::OAuth is class for Salesforce OAuth.
   class OAuth < Salesforce::Base
-    attr_reader :access_token, :instance_url
+    attr_reader :access_token, :instance_url, :issued_at
 
     # @param [String] client_id
     # @param [String] client_secret
@@ -12,8 +12,8 @@ module Salesforce
     # @param [String] security_token
     # @param [String] api_version
     def initialize(**kwargs)
-      @client_id ||= kwargs[:client_id] || Salesforce.client_id
-      @client_secret ||= kwargs[:client_secret] || Salesforce.client_secret
+      @client_id = kwargs[:client_id] || Salesforce.client_id
+      @client_secret = kwargs[:client_secret] || Salesforce.client_secret
       @username = kwargs[:username] || Salesforce.username
       @password = kwargs[:password] || Salesforce.password
       @security_token = kwargs[:security_token] || Salesforce.security_token
@@ -35,6 +35,7 @@ module Salesforce
       json = response.json
       @access_token = json&.dig('access_token')
       @instance_url = json&.dig('instance_url')
+      @issued_at = json&.dig('issued_at')
       nil
     rescue Salesforce::Error => e
       raise e
