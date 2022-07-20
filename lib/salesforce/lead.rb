@@ -107,8 +107,8 @@ module Salesforce
     def normalizer(payload)
       payload = JSON.parse(payload.to_json)
       payload = remove_null_fields(payload)
-      payload = split_name_field(payload)
-      converter(payload)
+      payload = converter(payload)
+      split_name_field(payload)
     rescue Salesforce::Error => e
       raise e
     end
