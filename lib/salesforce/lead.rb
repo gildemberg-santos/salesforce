@@ -26,7 +26,7 @@ module Salesforce
       raise Salesforce::Error, 'Instance URL is required' if blank? @instance_url
 
       refresh_token! if kwargs[:refresh_token_call].present?
-      field!
+      field! unless kwargs[:refresh_token_call].present?
     rescue Salesforce::Error => e
       raise e
     end

@@ -8,10 +8,10 @@ module Salesforce
     # @param [String] refresh_token
     # @param [String] api_version
     def initialize(**kwargs)
-      @client_id ||= kwargs[:client_id] || Salesforce.client_id
-      @client_secret ||= kwargs[:client_secret] || Salesforce.client_secret
-      @refresh_token ||= kwargs[:refresh_token]
-      @api_version ||= kwargs[:api_version] || API_VERSION
+      @client_id = kwargs[:client_id] || Salesforce.client_id
+      @client_secret = kwargs[:client_secret] || Salesforce.client_secret
+      @refresh_token = kwargs[:refresh_token]
+      @api_version = kwargs[:api_version] || API_VERSION
 
       raise Salesforce::Error, 'Client ID is required' if blank? @client_id
       raise Salesforce::Error, 'Client secret is required' if blank? @client_secret
