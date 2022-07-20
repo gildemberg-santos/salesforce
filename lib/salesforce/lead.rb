@@ -25,8 +25,8 @@ module Salesforce
       raise Salesforce::Error, 'Access token is required' if blank? @access_token
       raise Salesforce::Error, 'Instance URL is required' if blank? @instance_url
 
-      refresh_token! if kwargs[:refresh_token_call].present?
-      field! unless kwargs[:refresh_token_call].present?
+      # refresh_token! if kwargs[:refresh_token_call].present?
+      # field! unless kwargs[:refresh_token_call].present?
     rescue Salesforce::Error => e
       raise e
     end
@@ -47,8 +47,6 @@ module Salesforce
     rescue Salesforce::Error => e
       raise e
     end
-
-    private
 
     def refresh_token!
       raise Salesforce::Error, 'Refresh token is required' if blank? @refresh_token
@@ -95,6 +93,8 @@ module Salesforce
     rescue Salesforce::Error => e
       raise e
     end
+
+    private
 
     def endpoint_field
       "#{@instance_url}/services/data/#{@api_version}/sobjects/Lead/describe"
