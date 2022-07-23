@@ -16,10 +16,10 @@ module Salesforce
       @redirect_uri ||= kwargs[:redirect_uri] || Salesforce.redirect_uri
       @api_version ||= kwargs[:api_version] || API_VERSION
 
-      raise Salesforce::Error, 'Client ID is required' if blank? @client_id
-      raise Salesforce::Error, 'Client secret is required' if blank? @client_secret
-      raise Salesforce::Error, 'Redirect URI is required' if blank? @redirect_uri
-      raise Salesforce::Error, 'API version is required' if blank? @api_version
+      raise Salesforce::Error, 'Client ID is required' if @client_id.blank?
+      raise Salesforce::Error, 'Client secret is required' if @client_secret.blank?
+      raise Salesforce::Error, 'Redirect URI is required' if @redirect_uri.blank?
+      raise Salesforce::Error, 'API version is required' if @api_version.blank?
 
       endpoint_authorize
     rescue Salesforce::Error => e
@@ -48,7 +48,7 @@ module Salesforce
     end
 
     def endpoint
-      raise Salesforce::Error, 'Code is required' if blank? @code
+      raise Salesforce::Error, 'Code is required' if @code.blank?
 
       "#{host}token?grant_type=authorization_code&client_id=#{@client_id}&client_secret=#{@client_secret}&redirect_uri=#{@redirect_uri}&code=#{@code}&format=json"
     end

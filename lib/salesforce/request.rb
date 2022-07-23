@@ -2,14 +2,14 @@
 
 module Salesforce
   # Salesforce::Request is a wrapper around Net::HTTP::Post.
-  class Request < Salesforce::Base
+  class Request
     attr_reader :json, :status_code
     attr_writer :access_token
 
     # @param [String] url
     def initialize(**kwargs)
       @url = kwargs[:url]
-      raise Salesforce::Error, 'URL is required' if blank? @url
+      raise Salesforce::Error, 'URL is required' if @url.blank?
     rescue Salesforce::Error => e
       raise e
     end
@@ -21,9 +21,9 @@ module Salesforce
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = Net::HTTP::Post.new(uri.request_uri)
-      request['Authorization'] = "Bearer #{@access_token}" unless blank? @access_token
+      request['Authorization'] = "Bearer #{@access_token}" unless @access_token.blank?
       request['Content-Type'] = 'application/json'
-      request.body = kwargs[:payload].to_json unless blank? kwargs[:payload]
+      request.body = kwargs[:payload].to_json unless kwargs[:payload].blank?
       responde = http.request(request)
 
       @json = JSON.parse(responde.body)
@@ -40,7 +40,7 @@ module Salesforce
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = Net::HTTP::Get.new(uri.request_uri)
-      request['Authorization'] = "Bearer #{@access_token}" unless blank? @access_token
+      request['Authorization'] = "Bearer #{@access_token}" unless @access_token.blank?
       request['Content-Type'] = 'application/json'
       responde = http.request(request)
 

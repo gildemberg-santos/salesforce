@@ -4,9 +4,11 @@ require_relative '../config'
 
 describe Salesforce::Lead do
   before(:all) do
-    oauth = Salesforce::OAuth.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, username: USERNAME, password: PASSWORD, security_token: SECURITY_TOKEN)
-    oauth.call
-    @lead = Salesforce::Lead.new(access_token: oauth.access_token, instance_url: oauth.instance_url, issued_at: oauth.issued_at)
+    Salesforce.client_id = CLIENT_ID
+    Salesforce.client_secret = CLIENT_SECRET
+    @lead = Salesforce::Lead.new(access_token: ACCESS_TOKEN, refresh_token: REFRESH_TOKEN, instance_url: INSTANCE_URL)
+    @lead.field!
+    @lead.refresh_token!
   end
 
   it { expect(@lead.fields).not_to eq nil }
@@ -16,7 +18,7 @@ describe Salesforce::Lead do
   it {
     expect do
       @lead.send({})
-    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Required fields are missing: [LastName, Company, marcas__c]')))
+    end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: 'Payload is required')))
   }
 
   it {
@@ -32,4 +34,5 @@ describe Salesforce::Lead do
   }
 
   it { expect(@lead.send({ 'Company' => 'Test', 'LastName' => 'Test', 'marcas__c' => 'carro' })['success']).to eq true }
+
 end

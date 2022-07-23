@@ -2,7 +2,7 @@
 
 module Salesforce
   # Salesforce::OAuth is class for Salesforce OAuth.
-  class OAuth < Salesforce::Base
+  class OAuth
     attr_reader :access_token, :instance_url, :issued_at
 
     # @param [String] client_id
@@ -19,12 +19,12 @@ module Salesforce
       @security_token = kwargs[:security_token] || Salesforce.security_token
       @api_version = kwargs[:api_version] || API_VERSION
 
-      raise Salesforce::Error, 'Client ID is required' if blank? @client_id
-      raise Salesforce::Error, 'Client secret is required' if blank? @client_secret
-      raise Salesforce::Error, 'Username is required' if blank? @username
-      raise Salesforce::Error, 'Password is required' if blank? @password
-      raise Salesforce::Error, 'Security token is required' if blank? @security_token
-      raise Salesforce::Error, 'API version is required' if blank? @api_version
+      raise Salesforce::Error, 'Client ID is required' if @client_id.blank?
+      raise Salesforce::Error, 'Client secret is required' if @client_secret.blank?
+      raise Salesforce::Error, 'Username is required' if @username.blank?
+      raise Salesforce::Error, 'Password is required' if @password.blank?
+      raise Salesforce::Error, 'Security token is required' if @security_token.blank?
+      raise Salesforce::Error, 'API version is required' if @api_version.blank?
     rescue Salesforce::Error => e
       raise e
     end

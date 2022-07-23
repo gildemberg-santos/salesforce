@@ -13,10 +13,10 @@ module Salesforce
       @refresh_token = kwargs[:refresh_token]
       @api_version = kwargs[:api_version] || API_VERSION
 
-      raise Salesforce::Error, 'Client ID is required' if blank? @client_id
-      raise Salesforce::Error, 'Client secret is required' if blank? @client_secret
-      raise Salesforce::Error, 'Refresh token is required' if blank? @refresh_token
-      raise Salesforce::Error, 'API version is required' if blank? @api_version
+      raise Salesforce::Error, 'Client ID is required' if @client_id.blank?
+      raise Salesforce::Error, 'Client secret is required' if @client_secret.blank?
+      raise Salesforce::Error, 'Refresh token is required' if @refresh_token.blank?
+      raise Salesforce::Error, 'API version is required' if @api_version.blank?
     rescue Salesforce::Error => e
       raise e
     end

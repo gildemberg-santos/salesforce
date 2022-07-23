@@ -34,8 +34,13 @@ describe Salesforce::OAuthCode do
 
   # it 'Access token and Instance url' do
   #   oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
+  #   puts oauth_code.authorize
   #   oauth_code.code = CODE
   #   oauth_code.call
+  #   puts oauth_code.access_token
+  #   puts oauth_code.refresh_token
+  #   puts oauth_code.instance_url
+
   #   expect(oauth_code.access_token).to_not be_nil
   #   expect(oauth_code.refresh_token).to_not be_nil
   #   expect(oauth_code.instance_url).to_not be_nil

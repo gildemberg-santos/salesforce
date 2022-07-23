@@ -2,7 +2,7 @@
 
 module Salesforce
   # Salesforce::Lead is Salesforce lead class.
-  class Lead < Salesforce::Base
+  class Lead
     attr_reader :fields, :required_fields, :normalized_fields
 
     # @param [String] access_token
@@ -22,8 +22,8 @@ module Salesforce
       @current_timezone = kwargs[:timezone] || Salesforce.timezone
       @api_version = kwargs[:api_version] || API_VERSION
 
-      raise Salesforce::Error, 'Access token is required' if blank? @access_token
-      raise Salesforce::Error, 'Instance URL is required' if blank? @instance_url
+      raise Salesforce::Error, 'Access token is required' if @access_token.blank?
+      raise Salesforce::Error, 'Instance URL is required' if @instance_url.blank?
 
       # refresh_token! if kwargs[:refresh_token_call].present?
       # field! unless kwargs[:refresh_token_call].present?
@@ -33,12 +33,12 @@ module Salesforce
 
     # @param [Hash] payload
     def send(payload)
-      raise Salesforce::Error, 'Payload is required' if blank? payload
+      raise Salesforce::Error, 'Payload is required' if payload.blank?
 
       response = Salesforce::Request.new(url: endpoint_send)
       response.access_token = @access_token
       payload = normalizer(payload)
-      raise Salesforce::Error, 'The payload is in mandatory shipping' if blank? payload
+      raise Salesforce::Error, 'The payload is in mandatory shipping' if payload.blank?
 
       response.post(payload: payload)
       raise Salesforce::Error, response.json[0]['message'] if response.status_code != 201
@@ -49,7 +49,7 @@ module Salesforce
     end
 
     def refresh_token!
-      raise Salesforce::Error, 'Refresh token is required' if blank? @refresh_token
+      raise Salesforce::Error, 'Refresh token is required' if @refresh_token.blank?
 
       oauth = Salesforce::OAuthCodeRefreshToken.new(
         client_id: @client_id,
@@ -122,7 +122,7 @@ module Salesforce
     def remove_null_fields(payload)
       normalized_payload = {}
       payload.each do |key, value|
-        next if blank?(value)
+        next if value.blank?
 
         normalized_payload.merge!({ key => value })
       end
@@ -133,7 +133,7 @@ module Salesforce
 
     def split_name_field(payload)
       full_name = payload['Name']
-      return payload if blank?(full_name)
+      return payload if full_name.blank?
 
       first_name, last_name = full_name.split(' ')
       payload['FirstName'] = first_name
