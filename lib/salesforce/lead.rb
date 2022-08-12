@@ -136,8 +136,8 @@ module Salesforce
       return payload if full_name.blank?
 
       first_name, last_name = full_name.split(' ')
-      payload['FirstName'] = first_name
-      payload['LastName'] = last_name
+      payload['FirstName'] = first_name || ' '
+      payload['LastName'] = last_name || ' '
       payload.delete('Name')
       payload
     rescue Salesforce::Error => e
