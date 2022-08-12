@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    salesforce (0.1.22)
+    salesforce (0.1.23)
 
 GEM
   remote: https://rubygems.org/
@@ -124,4 +124,4 @@ DEPENDENCIES
   salesforce!
 
 BUNDLED WITH
-   2.3.7
+   2.3.18
