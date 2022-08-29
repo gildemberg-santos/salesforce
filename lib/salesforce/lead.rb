@@ -82,7 +82,7 @@ module Salesforce
         next if (not_remove_fields && createable) || (not_remove_fields && remove_type) || remove_fields
 
         field_temp = { field['name'] => { 'type' => 'string', 'title' => field['label'] } }
-        if %w[multipicklist picklist].include?(field["type"]) and field['picklistValues'].length.positive?
+        if %w[multipicklist picklist].include?(field['type']) && field['picklistValues'].length.positive?
           field_temp[field['name']].merge!(create_enum(field['picklistValues']))
         end
 
@@ -137,7 +137,7 @@ module Salesforce
 
       first_name, last_name = full_name.split(' ', 2)
       payload['FirstName'] = first_name
-      payload['LastName'] = last_name.blank? ? "Não Informado" : last_name
+      payload['LastName'] = last_name.blank? ? 'Não Informado' : last_name
       payload.delete('Name')
       payload
     rescue Salesforce::Error => e
@@ -173,11 +173,10 @@ module Salesforce
       raise e
     end
 
-    def create_enum(picklistValues)
-      picklist = { 'enum' => [], 'default' => nil, 'showCustomVariables' => false }
-      picklistValues.map do |value|
-        picklist['default'] = value['value'] if value['defaultValue'] == true
-        picklist['enum'].append(value['value'])
+    def create_enum(picklistvalues)
+      picklist = { 'oneOf' => [{ 'const' => '', 'title' => 'Nenhum item selecionado' }], 'default' => '', 'showCustomVariables' => false }
+      picklistvalues.map do |value|
+        picklist['oneOf'].append({ 'const' => value['value'], 'title' => value['label'] })
       end
       picklist
     end
