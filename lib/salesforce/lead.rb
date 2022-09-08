@@ -174,7 +174,7 @@ module Salesforce
     end
 
     def create_enum(picklistvalues)
-      picklist = { 'oneOf' => [{ 'const' => '', 'title' => 'Nenhum item selecionado' }], 'default' => '', 'showCustomVariables' => false }
+      picklist = { 'oneOf' => [{ 'const' => '', 'title' => 'Nenhum item selecionado' }], 'default' => '', 'showCustomVariables' => true }
       picklistvalues.map do |value|
         picklist['oneOf'].append({ 'const' => value['value'], 'title' => value['label'] })
       end

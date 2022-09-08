@@ -6,6 +6,7 @@ require 'json'
 require 'net/http'
 require 'active_support/time'
 require 'logger'
+require 'openssl'
 
 require 'salesforce/debug'
 require 'salesforce/timezone'

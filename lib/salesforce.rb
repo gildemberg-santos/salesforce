@@ -5,6 +5,7 @@ require 'json'
 require 'net/http'
 require 'active_support/time'
 require 'logger'
+require 'openssl'
 
 # Salesforce is integration with Salesforce API.
 module Salesforce; end
