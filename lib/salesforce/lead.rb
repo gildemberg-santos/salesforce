@@ -174,9 +174,10 @@ module Salesforce
     end
 
     def create_enum(picklistvalues)
-      picklist = { 'oneOf' => [{ 'const' => '', 'title' => 'Nenhum item selecionado' }], 'default' => '', 'showCustomVariables' => true }
+      picklist = { 'enum' => [''], 'default' => '', 'showCustomVariables' => true }
       picklistvalues.map do |value|
-        picklist['oneOf'].append({ 'const' => value['value'], 'title' => value['label'] })
+        picklist['default'] = value['value'] if value['defaultValue'] == true
+        picklist['enum'].append(value['value'])
       end
       picklist
     end
