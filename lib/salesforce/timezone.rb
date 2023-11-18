@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Salesforce
-  @timezone = 'America/Sao_Paulo'
+  @timezone = "America/Sao_Paulo"
 
   def self.timezone=(value)
     @timezone = value

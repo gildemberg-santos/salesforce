@@ -13,32 +13,37 @@ module Salesforce
       @refresh_token = kwargs[:refresh_token]
       @api_version = kwargs[:api_version] || API_VERSION
 
-      raise Salesforce::Error, 'Client ID is required' if @client_id.blank?
-      raise Salesforce::Error, 'Client secret is required' if @client_secret.blank?
-      raise Salesforce::Error, 'Refresh token is required' if @refresh_token.blank?
-      raise Salesforce::Error, 'API version is required' if @api_version.blank?
-    rescue Salesforce::Error => e
-      raise e
+      raise Salesforce::Error, "Client ID is required" if @client_id.blank?
+      raise Salesforce::Error, "Client secret is required" if @client_secret.blank?
+      raise Salesforce::Error, "Refresh token is required" if @refresh_token.blank?
+      raise Salesforce::Error, "API version is required" if @api_version.blank?
     end
 
     def call
       response = Salesforce::Request.new(url: endpoint)
       response.refresh
       json = response.json
-      @access_token = json&.dig('access_token')
-      @instance_url = json&.dig('instance_url')
-      @issued_at = json&.dig('issued_at')
+      @access_token = json&.dig("access_token")
+      @instance_url = json&.dig("instance_url")
+      @issued_at = json&.dig("issued_at")
       nil
-    rescue Salesforce::Error => e
-      raise e
     end
 
     private
 
     def endpoint
-      "#{host}token?grant_type=refresh_token&client_id=#{@client_id}&client_secret=#{@client_secret}&refresh_token=#{@refresh_token}"
-    rescue Salesforce::Error => e
-      raise e
+      "#{host}token?#{endpoint_query}"
+    end
+
+    def endpoint_query
+      URI.encode_www_form(
+        {
+          grant_type: "refresh_token",
+          client_id: @client_id,
+          client_secret: @client_secret,
+          refresh_token: @refresh_token
+        }
+      )
     end
   end
 end

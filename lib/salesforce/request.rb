@@ -9,65 +9,49 @@ module Salesforce
     # @param [String] url
     def initialize(**kwargs)
       @url = kwargs[:url]
-      raise Salesforce::Error, 'URL is required' if @url.blank?
-    rescue Salesforce::Error => e
-      raise e
+      raise Salesforce::Error, "URL is required" if @url.blank?
     end
 
     # @param [Hash] payload
     def post(**kwargs)
-      uri = URI.parse(@url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      request = Net::HTTP::Post.new(uri.request_uri)
-      request['Authorization'] = "Bearer #{@access_token}" unless @access_token.blank?
-      request['Content-Type'] = 'application/json'
-      request.body = kwargs[:payload].to_json unless kwargs[:payload].blank?
-      responde = http.request(request)
-
-      @json = JSON.parse(responde.body)
-      @status_code = responde.code.to_i
-
-      raise Salesforce::Error, @json[0]['message'] if @status_code != 201 && @status_code != 200
-    rescue Salesforce::Error => e
-      raise e
+      response = HTTParty.post(@url, headers: headers, body: kwargs[:payload].to_json)
+      @json = response
+      @status_code = response.code
+      raise Salesforce::Error, @json[0]["message"] if @status_code != 201 && @status_code != 200
     end
 
     def get
-      uri = URI.parse(@url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      request = Net::HTTP::Get.new(uri.request_uri)
-      request['Authorization'] = "Bearer #{@access_token}" unless @access_token.blank?
-      request['Content-Type'] = 'application/json'
-      responde = http.request(request)
-
-      @json = JSON.parse(responde.body)
-      @status_code = responde.code.to_i
-
-      raise Salesforce::Error, @json[0]['message'] if @status_code != 200
-    rescue Salesforce::Error => e
-      raise e
+      response = HTTParty.get(@url, headers: headers)
+      @json = response
+      @status_code = response.code
+      raise Salesforce::Error, @json[0]["message"] if @status_code != 200
     end
 
     def refresh
-      uri = URI.parse(@url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      request = Net::HTTP::Post.new(uri.request_uri)
-      request['Authorization'] = 'Basic'
-      request['Content-Type'] = 'application/json'
-      responde = http.request(request)
-
-      @json = JSON.parse(responde.body)
-      @status_code = responde.code.to_i
-
+      response = HTTParty.post(@url, headers: headers_basic)
+      @json = response
+      @status_code = response.code
       raise Salesforce::Error, @json if @status_code != 201 && @status_code != 200
-    rescue Salesforce::Error => e
-      raise e
+    end
+
+    private
+
+    def headers
+      {
+        Authorization: "Bearer #{@access_token}",
+        "Content-Type": "application/json"
+      }
+    end
+
+    def headers_basic
+      {
+        Authorization: "Basic",
+        "Content-Type": "application/json"
+      }
+    end
+
+    def body
+      kwargs[:payload].to_json
     end
   end
 end
