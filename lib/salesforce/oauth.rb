@@ -25,8 +25,6 @@ module Salesforce
       raise Salesforce::Error, "Password is required" if @password.blank?
       raise Salesforce::Error, "Security token is required" if @security_token.blank?
       raise Salesforce::Error, "API version is required" if @api_version.blank?
-    rescue Salesforce::Error => e
-      raise e
     end
 
     def call
@@ -37,16 +35,24 @@ module Salesforce
       @instance_url = json&.dig("instance_url")
       @issued_at = json&.dig("issued_at")
       nil
-    rescue Salesforce::Error => e
-      raise e
     end
 
     private
 
     def endpoint
-      "#{host}token?grant_type=password&client_id=#{@client_id}&client_secret=#{@client_secret}&username=#{@username}&password=#{@password}#{@security_token}"
-    rescue Salesforce::Error => e
-      raise e
+      "#{host}token?#{endpoint_query}"
+    end
+
+    def endpoint_query
+      URI.encode_www_form(
+        {
+          grant_type: "password",
+          client_id: @client_id,
+          client_secret: @client_secret,
+          username: @username,
+          password: @password + @security_token
+        }
+      )
     end
 
     def host

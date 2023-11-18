@@ -22,18 +22,27 @@ RSpec.describe Salesforce::OAuthCode do
   end
 
   it "Pass the code not null" do
-    oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
+    oauth_code = Salesforce::OAuthCode.new(
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      redirect_uri: REDIRECT_URI
+    )
     oauth_code.code = CODE
     expect(oauth_code.code).to_not be_nil
   end
 
   it "Authorize endpoint" do
-    oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
+    oauth_code = Salesforce::OAuthCode.new(
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      redirect_uri: REDIRECT_URI
+    )
     expect(oauth_code.authorize).to_not be_nil
   end
 
   # it 'Access token and Instance url' do
-  #   oauth_code = Salesforce::OAuthCode.new(client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
+  #   oauth_code = Salesforce::OAuthCode.new(
+  #  client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI)
   #   puts oauth_code.authorize
   #   oauth_code.code = CODE
   #   oauth_code.call
