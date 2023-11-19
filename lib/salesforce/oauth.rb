@@ -30,10 +30,9 @@ module Salesforce
     def call
       response = Salesforce::Request.new(url: endpoint)
       response.post
-      json = response.json
-      @access_token = json&.dig("access_token")
-      @instance_url = json&.dig("instance_url")
-      @issued_at = json&.dig("issued_at")
+      @access_token = response.json["access_token"]
+      @instance_url = response.json["instance_url"]
+      @issued_at = response.json["issued_at"]
       nil
     end
 
