@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "json", "~> 2.6", ">= 2.6.3"
   spec.add_dependency "u-case", "~> 4.5.2"
 
-  spec.add_development_dependency "pry", "~> 0.13.1"
+  spec.add_development_dependency "pry", "~> 0.14.2"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 1.58"
   spec.add_development_dependency "ruby-lsp", "~> 0.13.0"
