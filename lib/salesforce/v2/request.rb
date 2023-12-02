@@ -17,7 +17,6 @@ module Salesforce
         send(options[:method])
       end
 
-      # TODO: Validar o coodigo de retorno da API
       def post
         response = HTTParty.post(url, headers: headers, body: body)
         handle_exception(:indefinied_message, response[0]["message"]) unless [201, 200].include? response.code
@@ -28,14 +27,6 @@ module Salesforce
       def get
         response = HTTParty.get(url, headers: headers)
         handle_exception(:indefinied_message, response[0]["message"]) unless response.code == 200
-
-        response
-      end
-
-      # TODO: Validar o retorno de erros do refresh da API
-      def refresh
-        response = HTTParty.post(url, headers: headers)
-        handle_exception(:indefinied_message, response) unless [201, 200].include? response.code
 
         response
       end
@@ -53,7 +44,7 @@ module Salesforce
 
       def valid!
         return handle_exception(:invalid_url) if url.nil?
-        return handle_exception(:invalid_token) if options[:token].nil?
+        return handle_exception(:invalid_token) if options[:token].nil? && !options[:method] == :refresh
         return handle_exception(:indefinied_method) if options[:method].nil?
       end
 
@@ -67,6 +58,9 @@ module Salesforce
 
         raise Salesforce::Error, message[key] unless message[key].nil?
       end
+
+      # NOTE: Not send a header with token
+      alias refresh post
     end
   end
 end
