@@ -20,12 +20,14 @@ module Salesforce
     end
 
     def call
-      response = Salesforce::Request.new(url: endpoint)
+      @response = Salesforce::Request.new(url: endpoint)
       response.refresh
-      json = response.json
-      @access_token = json&.dig("access_token")
-      @instance_url = json&.dig("instance_url")
-      @issued_at = json&.dig("issued_at")
+      @access_token = response.json["access_token"]
+      @instance_url = response.json["instance_url"]
+      @id = response.json["id"]
+      @token_type = response.json["token_type"]
+      @issued_at = response.json["issued_at"]
+      @signature = response.json["signature"]
       nil
     end
 

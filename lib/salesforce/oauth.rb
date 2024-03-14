@@ -3,7 +3,8 @@
 module Salesforce
   # Salesforce::OAuth is class for Salesforce OAuth.
   class OAuth
-    attr_reader :access_token, :instance_url, :issued_at
+    attr_reader :access_token, :instance_url, :id, :token_type, :issued_at, :signature
+    attr_reader :response
 
     # @param [String] client_id
     # @param [String] client_secret
@@ -28,11 +29,14 @@ module Salesforce
     end
 
     def call
-      response = Salesforce::Request.new(url: endpoint)
+      @response = Salesforce::Request.new(url: endpoint)
       response.post
       @access_token = response.json["access_token"]
       @instance_url = response.json["instance_url"]
+      @id = response.json["id"]
+      @token_type = response.json["token_type"]
       @issued_at = response.json["issued_at"]
+      @signature = response.json["signature"]
       nil
     end
 
