@@ -69,7 +69,7 @@ module Salesforce
         not_remove_fields = !%w[Name].include?(field["name"])
         remove_fields = %w[FirstName LastName].include?(field["name"])
         createable = field["createable"] == false
-        remove_type = %w[boolean reference].include?(field["type"])
+        remove_type = %w[reference].include?(field["type"])
         @fields.merge!({ field["name"] => { "type" => field["type"], "title" => field["label"] } })
 
         next if (not_remove_fields && createable) || (not_remove_fields && remove_type) || remove_fields
