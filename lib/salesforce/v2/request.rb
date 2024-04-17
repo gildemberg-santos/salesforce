@@ -19,7 +19,9 @@ module Salesforce
 
       def post
         response = HTTParty.post(url, headers: headers, body: body)
-        handle_exception(:indefinied_message, handle_exception_message(response)) unless [201, 200].include? response.code
+        unless [201, 200].include? response.code
+          handle_exception(:indefinied_message, handle_exception_message(response))
+        end
 
         response
       end
@@ -44,7 +46,7 @@ module Salesforce
 
       def valid!
         return handle_exception(:invalid_url) if url.nil?
-        return handle_exception(:invalid_token) if options[:token].nil? && !options[:method] == :refresh
+        return handle_exception(:invalid_token) if options[:token].nil? && options[:method] != :refresh
 
         handle_exception(:indefinied_method) if options[:method].nil?
       end

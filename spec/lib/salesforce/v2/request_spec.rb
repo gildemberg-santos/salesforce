@@ -28,7 +28,7 @@ RSpec.describe Salesforce::V2::Request do
       end
 
       context "when invalid token" do
-        let(:options) { { method: :post } }
+        let(:options) { { method: :post, token: nil } }
 
         it { expect(request.data[:exception].message).to eq "Salesforce token is not valid" }
       end

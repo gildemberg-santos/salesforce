@@ -32,7 +32,7 @@ RSpec.describe Salesforce::Lead do
       @lead.send({ "Company" => "Test" })
     end.to raise_error(
       an_instance_of(Salesforce::Error).and(
-        having_attributes(message: "Required fields are missing: [LastName, marcas__c]")
+        having_attributes(message: "Required fields are missing: [LastName]")
       )
     )
   }
@@ -42,14 +42,14 @@ RSpec.describe Salesforce::Lead do
       @lead.send({ "LastName" => "Test" })
     end.to raise_error(
       an_instance_of(Salesforce::Error).and(
-        having_attributes(message: "Required fields are missing: [Company, marcas__c]")
+        having_attributes(message: "Required fields are missing: [Company]")
       )
     )
   }
 
   it {
     expect(
-      @lead.send({ "Company" => "Test", "LastName" => "Test", "marcas__c" => "carro, moto" })["success"]
+      @lead.send({ "Company" => "Test", "LastName" => "Test" })["success"]
     ).to eq true
   }
 end
