@@ -3,8 +3,7 @@
 module Salesforce
   # Salesforce::OAuth is class for Salesforce OAuth.
   class OAuth
-    attr_reader :access_token, :instance_url, :id, :token_type, :issued_at, :signature
-    attr_reader :response
+    attr_reader :access_token, :instance_url, :id, :token_type, :issued_at, :signature, :response
 
     # @param [String] client_id
     # @param [String] client_secret
