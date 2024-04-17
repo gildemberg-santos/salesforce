@@ -103,7 +103,10 @@ module Salesforce
     end
 
     def to_b(object)
-      !!object
+      return true if object == true || object =~ (/^(true|t|yes|y|1|sim)$/i)
+      return false if object == false || object =~ (/^(false|f|no|n|0|não|nao)$/i)
+
+      nil
     end
 
     def remove_null_fields
@@ -138,6 +141,7 @@ module Salesforce
         @payload[key] = to_b(value) if type == "boolean"
         @payload[key] = value.to_s if type == "reference"
       end
+      remove_null_fields
     end
 
     def parse_datetime(datetime)
