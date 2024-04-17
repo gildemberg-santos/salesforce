@@ -45,7 +45,8 @@ module Salesforce
       def valid!
         return handle_exception(:invalid_url) if url.nil?
         return handle_exception(:invalid_token) if options[:token].nil? && !options[:method] == :refresh
-        return handle_exception(:indefinied_method) if options[:method].nil?
+
+        handle_exception(:indefinied_method) if options[:method].nil?
       end
 
       def handle_exception(key = nil, exception_message = nil)
