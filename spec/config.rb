@@ -5,7 +5,9 @@ unless File.exist?(File.join("./spec", "config.yaml"))
   exit
 end
 config_yml = YAML.load_file(File.join("./spec", "config.yaml"))
-CONFIG_SPEC = Struct.new(*(key = config_yml.keys.map(&:to_sym))).new(*config_yml.values_at(*key))
+key = config_yml.keys
+values = config_yml.values_at(*key)
+CONFIG_SPEC = Struct.new(*key.map(&:to_sym)).new(*values)
 
 # TODO: Refactor this code
 CLIENT_ID = CONFIG_SPEC.client_id
