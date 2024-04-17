@@ -25,16 +25,5 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-
-  spec.add_dependency "activesupport", "~> 5.2.1"
-  spec.add_dependency "httparty", "~> 0.21.0"
-  spec.add_dependency "json", "~> 2.6", ">= 2.6.3"
-  spec.add_dependency "u-case", "~> 4.5.2"
-
-  spec.add_development_dependency "pry", "~> 0.14.2"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "~> 1.58"
-  spec.add_development_dependency "ruby-lsp", "~> 0.13.0"
-  spec.add_development_dependency "solargraph", "~> 0.50.0"
-  spec.add_development_dependency "webmock", "~> 3.19.1"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
