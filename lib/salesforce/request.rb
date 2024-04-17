@@ -14,27 +14,32 @@ module Salesforce
 
     # @param [Hash] payload
     def post(**kwargs)
-      response = HTTParty.post(@url, headers: headers, body: kwargs[:payload].to_json)
+      response = HTTParty.post(@url, headers: headers, body: kwargs[:payload]&.to_json)
       @json = response
       @status_code = response.code
-      raise Salesforce::Error, @json[0]["message"] if @status_code != 201 && @status_code != 200
+      raise Salesforce::Error, handle_exception if @status_code != 201 && @status_code != 200
     end
 
     def get
       response = HTTParty.get(@url, headers: headers)
       @json = response
       @status_code = response.code
-      raise Salesforce::Error, @json[0]["message"] if @status_code != 200
+      raise Salesforce::Error, handle_exception if @status_code != 200
     end
 
     def refresh
       response = HTTParty.post(@url, headers: headers_basic)
       @json = response
       @status_code = response.code
-      raise Salesforce::Error, @json if @status_code != 201 && @status_code != 200
+      raise Salesforce::Error, handle_exception if @status_code != 201 && @status_code != 200
     end
 
     private
+
+    def handle_exception
+      exception_message = json.dig(0, "message") || json["error_description"] || json.to_s
+      raise Salesforce::Error, exception_message
+    end
 
     def headers
       {
