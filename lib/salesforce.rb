@@ -26,3 +26,4 @@ require "salesforce/lead"
 
 # Salesforce::V2 is integration with Salesforce.
 require "salesforce/v2/request"
+require "salesforce/v2/lead/create"
