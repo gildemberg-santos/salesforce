@@ -70,6 +70,7 @@ module Salesforce
         remove_fields = %w[FirstName LastName].include?(field["name"])
         createable = field["createable"] == false
         remove_type = %w[reference].include?(field["type"])
+        remove_required = field["nillable"] == false && field["type"] != "boolean"
         @fields.merge!({ field["name"] => { "type" => field["type"], "title" => field["label"] } })
 
         next if (not_remove_fields && createable) || (not_remove_fields && remove_type) || remove_fields
@@ -79,7 +80,7 @@ module Salesforce
           field_temp[field["name"]].merge!(create_enum(field["picklistValues"]))
         end
 
-        @required_fields.append(field["name"]) if field["nillable"] == false
+        @required_fields.append(field["name"]) if remove_required
         @normalized_fields.merge!(field_temp)
       end
       nil

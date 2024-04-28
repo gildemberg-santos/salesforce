@@ -52,4 +52,6 @@ RSpec.describe Salesforce::Lead do
       @lead.send({ "Company" => "Test", "LastName" => "Test" })["success"]
     ).to eq true
   }
+
+  it { expect(@lead.required_fields).to eq(%w[Name Company Status]) }
 end
