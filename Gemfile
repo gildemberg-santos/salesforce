@@ -8,7 +8,7 @@ gemspec
 gem "rails", "~> 5.2.1"
 gem "rake", "~> 13.0"
 
-gem "activesupport", "~> 5.2.1"
+gem "activesupport", ">= 5.2.1"
 gem "httparty", "~> 0.21.0"
 gem "json", "~> 2.6", ">= 2.6.3"
 gem "u-case", "~> 4.5.2"

@@ -26,8 +26,9 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activesupport", "~> 5.2.1"
+  spec.add_dependency "activesupport", ">= 5.2.1"
   spec.add_dependency "httparty", "~> 0.21.0"
   spec.add_dependency "json", "~> 2.6", ">= 2.6.3"
   spec.add_dependency "u-case", "~> 4.5.2"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
