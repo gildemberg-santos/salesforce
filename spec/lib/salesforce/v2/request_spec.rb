@@ -10,10 +10,10 @@ RSpec.describe Salesforce::V2::Request do
     URI.encode_www_form(
       {
         grant_type: "password",
-        client_id: CONFIG_SPEC.client_id,
-        client_secret: CONFIG_SPEC.client_secret,
-        username: CONFIG_SPEC.username,
-        password: "#{CONFIG_SPEC.password}#{CONFIG_SPEC.security_token}"
+        client_id: "",
+        client_secret: "",
+        username: "",
+        password: "password+security_token"
       }
     )
   end

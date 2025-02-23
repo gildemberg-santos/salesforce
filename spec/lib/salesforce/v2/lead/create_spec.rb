@@ -27,33 +27,35 @@ RSpec.describe Salesforce::V2::Lead::Create do
   end
 
   describe ".call" do
+    let(:data) { subject.data }
+
     context "when failure" do
       context "when invalid payload" do
         let(:payload) { nil }
 
         it { is_expected.to be_failure }
-        it { expect(subject.data[:invalid_payload]).to be_truthy }
+        it { expect(data[:invalid_payload]).to be_truthy }
       end
     end
     context "when successful" do
       it { is_expected.to be_success }
-      it { expect(subject.data[:message]).to eq("Lead created successfully!") }
-      it { expect(subject.data.dig(:payload, :Name)).to eq("Gildemberg Santos Gomes") }
-      it { expect(subject.data.dig(:payload, :Rating)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :Status)).to eq("Open - Not Contacted") }
-      it { expect(subject.data.dig(:payload, :Company)).to eq("Leadster") }
-      it { expect(subject.data.dig(:payload, :Industry)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :batata__c)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :marcas__c)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :LeadSource)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :Primary__c)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :Salutation)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :CleanStatus)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :IsConverted)).to eq("False") }
-      it { expect(subject.data.dig(:payload, :GeocodeAccuracy)).to eq(nil) }
-      it { expect(subject.data.dig(:payload, :IsUnreadByOwner)).to eq("False") }
-      it { expect(subject.data.dig(:payload, :TesteBoleano__c)).to eq("False") }
-      it { expect(subject.data.dig(:payload, :ProductInterest__c)).to eq(nil) }
+      it { expect(data[:message]).to eq("Lead created successfully!") }
+      it { expect(data.dig(:payload, :Name)).to eq("Gildemberg Santos Gomes") }
+      it { expect(data.dig(:payload, :Rating)).to eq(nil) }
+      it { expect(data.dig(:payload, :Status)).to eq("Open - Not Contacted") }
+      it { expect(data.dig(:payload, :Company)).to eq("Leadster") }
+      it { expect(data.dig(:payload, :Industry)).to eq(nil) }
+      it { expect(data.dig(:payload, :batata__c)).to eq(nil) }
+      it { expect(data.dig(:payload, :marcas__c)).to eq(nil) }
+      it { expect(data.dig(:payload, :LeadSource)).to eq(nil) }
+      it { expect(data.dig(:payload, :Primary__c)).to eq(nil) }
+      it { expect(data.dig(:payload, :Salutation)).to eq(nil) }
+      it { expect(data.dig(:payload, :CleanStatus)).to eq(nil) }
+      it { expect(data.dig(:payload, :IsConverted)).to eq("False") }
+      it { expect(data.dig(:payload, :GeocodeAccuracy)).to eq(nil) }
+      it { expect(data.dig(:payload, :IsUnreadByOwner)).to eq("False") }
+      it { expect(data.dig(:payload, :TesteBoleano__c)).to eq("False") }
+      it { expect(data.dig(:payload, :ProductInterest__c)).to eq(nil) }
     end
   end
 end
