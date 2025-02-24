@@ -6,6 +6,8 @@ module Salesforce
     # The Request class is responsible for making HTTP requests to the Salesforce API.
     # It inherits from Micro::Case::Safe to ensure safe execution of the request logic.
     class Request < Micro::Case::Safe
+      attributes :url, :options
+
       # Attributes:
       # @param url [String] the URL to which the request is sent.
       # @param options [Hash] the options for the request, including method, token, and payload.
