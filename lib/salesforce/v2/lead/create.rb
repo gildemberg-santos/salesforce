@@ -38,6 +38,11 @@ module Salesforce
         # @return [Hash] The normalized payload.
         def normalize_payload
           @payload.deep_symbolize_keys!
+          unless @payload[:Name].blank?
+            @payload[:FirstName], @payload[:LastName] = @payload.delete(:Name).to_s.split(" ", 2).tap do |_, last|
+              last.replace("Not Provided") if last.blank?
+            end
+          end
           @payload.reject! { |_, v| v.blank? }
         end
       end
