@@ -13,6 +13,7 @@ require "u-case"
 # Salesforce is integration with Salesforce API.
 module Salesforce; end
 
+require "salesforce/overwrite"
 require "salesforce/debug"
 require "salesforce/timezone"
 require "salesforce/credentials"
