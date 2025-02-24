@@ -40,7 +40,9 @@ RSpec.describe Salesforce::V2::Lead::Create do
     context "when successful" do
       it { is_expected.to be_success }
       it { expect(data[:message]).to eq("Lead created successfully!") }
-      it { expect(data.dig(:payload, :Name)).to eq("Gildemberg Santos Gomes") }
+      it { expect(data.dig(:payload, :Name)).not_to eq("Gildemberg Santos Gomes") }
+      it { expect(data.dig(:payload, :FirstName)).to eq("Gildemberg") }
+      it { expect(data.dig(:payload, :LastName)).to eq("Santos Gomes") }
       it { expect(data.dig(:payload, :Rating)).to eq(nil) }
       it { expect(data.dig(:payload, :Status)).to eq("Open - Not Contacted") }
       it { expect(data.dig(:payload, :Company)).to eq("Leadster") }
