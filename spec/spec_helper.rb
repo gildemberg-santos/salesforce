@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
+require "irb"
 require "vcr"
 require "webmock/rspec"
-require "pry"
-require "pry-reload"
 require "salesforce"
 require "config"
 
