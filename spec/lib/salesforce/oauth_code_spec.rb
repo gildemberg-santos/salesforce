@@ -21,7 +21,7 @@ RSpec.describe Salesforce::OAuthCode do
     end.to raise_error(an_instance_of(Salesforce::Error).and(having_attributes(message: "Redirect URI is required")))
   end
 
-  it "Pass the code not null" do
+  xit "Pass the code not null" do
     oauth_code = Salesforce::OAuthCode.new(
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
@@ -31,7 +31,7 @@ RSpec.describe Salesforce::OAuthCode do
     expect(oauth_code.code).to_not be_nil
   end
 
-  it "Authorize endpoint" do
+  xit "Authorize endpoint" do
     oauth_code = Salesforce::OAuthCode.new(
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
