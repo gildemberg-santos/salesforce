@@ -13,8 +13,6 @@ gem "json", ">= 2.6.3"
 gem "u-case", ">= 4.5.2"
 
 group :development do
-  gem "pry", ">= 0.14.2"
-  gem "pry-reload", ">= 0.3"
   gem "rspec", ">= 3.0"
   gem "rubocop", ">= 1.58"
   gem "ruby-lsp", ">= 0.13.0"
