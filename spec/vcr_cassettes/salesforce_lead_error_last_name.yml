@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://leadster5-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/Lead
+    body:
+      encoding: UTF-8
+      string: '{"LastName":"Test"}'
+    headers:
+      Authorization:
+      - Bearer 00D8a000003BvM7!ARwAQKpLE43ltOwOMBVknjErIjaEcP3VgH7KrB2YRoy5lNjS.HnbQEhpZqFzECLX8Uvn2z3VfOTt2I_LlYlJwnM_6fJxqD7K
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Sun, 23 Feb 2025 17:23:31 GMT
+      Set-Cookie:
+      - BrowserId=5xCwz_IKEe-fv72xQ_vdcQ; domain=.salesforce.com; path=/; expires=Mon,
+        23-Feb-2026 17:23:31 GMT; Max-Age=31536000; secure; SameSite=None
+      - CookieConsentPolicy=0:1; path=/; expires=Mon, 23-Feb-2026 17:23:31 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Mon, 23-Feb-2026 17:23:31
+        GMT; Max-Age=31536000; secure
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Sforce-Limit-Info:
+      - api-usage=76/15000
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"message":"Required fields are missing: [Company]","errorCode":"REQUIRED_FIELD_MISSING","fields":["Company"]}]'
+  recorded_at: Sun, 23 Feb 2025 17:23:31 GMT
+recorded_with: VCR 6.3.1
