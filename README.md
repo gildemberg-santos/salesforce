@@ -1,47 +1,122 @@
-# Salesforce
+# Salesforce Ruby Gem
 
-![example workflow](https://github.com/gildemberg-santos/salesforce/actions/workflows/main.yml/badge.svg)
+[![Build Status](https://github.com/gildemberg-santos/salesforce/actions/workflows/main.yml/badge.svg)](https://github.com/gildemberg-santos/salesforce/actions)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/salesforce`. To experiment with that code, run `bin/console` for an interactive prompt.
+Uma gem Ruby para facilitar a integração com a API do Salesforce.
 
-TODO: Delete this and the text above, and describe your gem
+Este projeto tem como objetivo fornecer uma interface simples e eficiente para autenticação, consultas e manipulação de dados via Salesforce.
 
-## Installation
+---
 
-Add this line to your application's Gemfile:
+## 📦 Instalação
+
+### Adicionando ao Gemfile
 
 ```ruby
 gem 'salesforce'
 ```
 
-And then execute:
+Depois, execute:
 
-    $ bundle install
+```bash
+bundle install
+```
 
-Or install it yourself as:
+### Ou instalação manual
 
-    $ gem install salesforce
+```bash
+gem install salesforce
+```
 
-## Usage
+### Dependência do sistema
 
-TODO: Write usage instructions here
+> **Importante:** Para sistemas baseados em Debian/Ubuntu, é necessário instalar o `ruby-dev`:
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/salesforce. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/salesforce/blob/master/CODE_OF_CONDUCT.md).
-
-## Code of Conduct
-
-Everyone interacting in the Salesforce project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/salesforce/blob/master/CODE_OF_CONDUCT.md).
-
-## dependencies
-
-```shell
+```bash
 sudo apt install ruby-dev
 ```
+
+---
+
+## 🚀 Uso
+
+### Console Interativo
+
+Execute o seguinte comando para iniciar um prompt interativo com a gem carregada:
+
+```bash
+bin/console
+```
+
+### Exemplo de utilização
+
+```ruby
+require 'salesforce'
+
+client = Salesforce::Client.new(
+  client_id: ENV['SALESFORCE_CLIENT_ID'],
+  client_secret: ENV['SALESFORCE_CLIENT_SECRET'],
+  username: ENV['SALESFORCE_USERNAME'],
+  password: ENV['SALESFORCE_PASSWORD']
+)
+
+# Exemplo de query
+result = client.query("SELECT Id, Name FROM Account LIMIT 10")
+puts result
+```
+
+> Mais exemplos de uso estarão disponíveis em breve.
+
+---
+
+## 🛠 Desenvolvimento
+
+### Clonando e configurando o projeto
+
+Após clonar o repositório, execute:
+
+```bash
+bin/setup
+```
+
+Para iniciar um console interativo com o ambiente carregado:
+
+```bash
+bin/console
+```
+
+### Instalando localmente
+
+Para instalar a gem localmente:
+
+```bash
+bundle exec rake install
+```
+
+### Publicando nova versão
+
+1. Atualize a versão em `lib/salesforce/version.rb`
+2. Execute:
+
+```bash
+bundle exec rake release
+```
+
+Este comando:
+- Cria uma nova tag no Git
+- Envia os commits e a tag para o GitHub
+- Publica a nova versão no [RubyGems.org](https://rubygems.org)
+
+---
+
+## 🤝 Contribuindo
+
+Relatórios de bugs e pull requests são bem-vindos no [repositório do GitHub](https://github.com/gildemberg-santos/salesforce).
+
+Este projeto segue um ambiente de colaboração saudável e respeitosa. Consulte o nosso [Código de Conduta](https://github.com/gildemberg-santos/salesforce/blob/master/CODE_OF_CONDUCT.md) para mais informações.
+
+---
+
+## 📄 Licença
+
+Este projeto é licenciado sob a licença [MIT](https://opensource.org/licenses/MIT).
