@@ -36,7 +36,7 @@ RSpec.describe Salesforce::Lead do
           @lead.send({ "Company" => "Test" })
         end.to raise_error(
           an_instance_of(Salesforce::Error).and(
-            having_attributes(message: "Required fields are missing: [LastName]")
+            having_attributes(message: "Campos obrigatórios ausentes: [LastName]")
           )
         )
       end
@@ -48,16 +48,22 @@ RSpec.describe Salesforce::Lead do
           @lead.send({ "LastName" => "Test" })
         end.to raise_error(
           an_instance_of(Salesforce::Error).and(
-            having_attributes(message: "Required fields are missing: [Company]")
+            having_attributes(message: "Campos obrigatórios ausentes: [Company]")
           )
         )
       end
     }
 
     it {
-      VCR.use_cassette("salesforce_lead_error_company_last_name") do
+      VCR.use_cassette("salesforce_success") do
         expect(
-          @lead.send({ "Company" => "Test", "LastName" => "Test" })["success"]
+          @lead.send(
+            { "Company" => "Test", "LastName" => "Test", "Birthday__c" => "11/05/1993",
+              "BirthdayHour__c" => "11/05/1993 11:50", "Primary__c" => "No", "marcas__c" => "carro, barco",
+              "AnnualRevenue" => "250,45", "NumberOfEmployees" => "10", "TesteBoleano__c" => "true",
+              "Description" => "Test description", "MobilePhone" => "1234567890", "Fax" => "123-456-7890",
+              "Website" => "https://www.example.com", "Phone" => "1234567890" }
+          )["success"]
         ).to eq true
       end
     }
