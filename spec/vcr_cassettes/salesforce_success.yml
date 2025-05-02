@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://leadster5-dev-ed.my.salesforce.com/services/data/v54.0/sobjects/Lead
+    body:
+      encoding: UTF-8
+      string: '{"Company":"Test","LastName":"Test","Birthday__c":"1993-05-11T00:00:00-03:00","BirthdayHour__c":"1993-05-11T11:50:00-03:00","Primary__c":"No","marcas__c":"carro;
+        barco","AnnualRevenue":250.0,"NumberOfEmployees":10,"TesteBoleano__c":true,"Description":"Test
+        description","MobilePhone":"1234567890","Fax":"123-456-7890","Website":"https://www.example.com","Phone":"1234567890","CreatedById":"00QHo00000zTe3XMAS"}'
+    headers:
+      Authorization:
+      - Bearer 00D8a000003BvM7!ARwAQFv4x9FySKf1rupwdv29J6YeNkVKxILADXHygYI30ZWiptapx73zyORBOjwIfjM44Mai9aaxCu1Nrt_qKiMoDDojztY9
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Fri, 02 May 2025 16:00:38 GMT
+      Set-Cookie:
+      - BrowserId=l32R9SduEfCBnkmpWcFJpg; domain=.salesforce.com; path=/; expires=Sat,
+        02-May-2026 16:00:38 GMT; Max-Age=31536000; secure; SameSite=None
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 02-May-2026 16:00:38 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 02-May-2026 16:00:38
+        GMT; Max-Age=31536000; secure
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Sforce-Limit-Info:
+      - api-usage=32/15000
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"message":"Unable to create/update fields: CreatedById. Please check
+        the security settings of this field and verify that it is read/write for your
+        profile or permission set.","errorCode":"INVALID_FIELD_FOR_INSERT_UPDATE","fields":["CreatedById"]}]'
+  recorded_at: Fri, 02 May 2025 16:00:39 GMT
+recorded_with: VCR 6.3.1

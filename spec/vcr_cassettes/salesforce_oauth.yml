@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://login.salesforce.com/services/oauth2/token?client_id=3MVG9FMtW0XJDLd1psJwzxdJ1VGw1KYONP1dTzNOlzRDoWgs_t6SD3pBh64.Ssq.EVXAKEae5Xoa3KUU9QUWQ&client_secret=4289401D2FB65104F439D333E0542C8E8DD004A63F3B1AAE28FCA339A99F93FC&grant_type=password&password=tytvuv-fyQhiz-8wathaKntB56m56Qrgh4ZJEE4Nkagb&username=gildemberg_santos@hotmail.com
+    uri: https://login.salesforce.com/services/oauth2/token?client_id=3MVG9FMtW0XJDLd1psJwzxdJ1VGw1KYONP1dTzNOlzRDoWgs_t6SD3pBh64.Ssq.EVXAKEae5Xoa3KUU9QUWQ&client_secret=4289401D2FB65104F439D333E0542C8E8DD004A63F3B1AAE28FCA339A99F93FC&grant_type=password&password=tytvuv-fyQhiz-8watha4KbrRJ8o7MS8AoXePebcr73F6&username=gildemberg_santos@hotmail.com
     body:
       encoding: UTF-8
       string: ''
@@ -23,13 +23,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 23 Feb 2025 17:23:32 GMT
+      - Fri, 02 May 2025 15:17:57 GMT
       Set-Cookie:
-      - BrowserId=57-04vIKEe-o19Ft1azL3Q; domain=.salesforce.com; path=/; expires=Mon,
-        23-Feb-2026 17:23:32 GMT; Max-Age=31536000; secure; SameSite=None
-      - CookieConsentPolicy=0:0; path=/; expires=Mon, 23-Feb-2026 17:23:32 GMT; Max-Age=31536000;
+      - BrowserId=oKYjfidoEfCBjGvzIJ0XQQ; domain=.salesforce.com; path=/; expires=Sat,
+        02-May-2026 15:17:57 GMT; Max-Age=31536000; secure; SameSite=None
+      - CookieConsentPolicy=0:0; path=/; expires=Sat, 02-May-2026 15:17:57 GMT; Max-Age=31536000;
         secure
-      - LSKey-c$CookieConsentPolicy=0:0; path=/; expires=Mon, 23-Feb-2026 17:23:32
+      - LSKey-c$CookieConsentPolicy=0:0; path=/; expires=Sat, 02-May-2026 15:17:57
         GMT; Max-Age=31536000; secure
       X-Content-Type-Options:
       - nosniff
@@ -49,6 +49,6 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D8a000003BvM7!ARwAQKpLE43ltOwOMBVknjErIjaEcP3VgH7KrB2YRoy5lNjS.HnbQEhpZqFzECLX8Uvn2z3VfOTt2I_LlYlJwnM_6fJxqD7K","instance_url":"https://leadster5-dev-ed.my.salesforce.com","id":"https://login.salesforce.com/id/00D8a000003BvM7EAK/0058a00000LryhyAAB","token_type":"Bearer","issued_at":"1740331412511","signature":"TzhskJ9MLBA7K1VVIC1rPA5OpE4kRseAT3yQ1Ay7Hzo="}'
-  recorded_at: Sun, 23 Feb 2025 17:23:32 GMT
+      string: '{"access_token":"00D8a000003BvM7!ARwAQFv4x9FySKf1rupwdv29J6YeNkVKxILADXHygYI30ZWiptapx73zyORBOjwIfjM44Mai9aaxCu1Nrt_qKiMoDDojztY9","instance_url":"https://leadster5-dev-ed.my.salesforce.com","id":"https://login.salesforce.com/id/00D8a000003BvM7EAK/0058a00000LryhyAAB","token_type":"Bearer","issued_at":"1746199077570","signature":"5SoylKivweUJF3tKx5l11WNwrujin00XKMbeGftt8Bs="}'
+  recorded_at: Fri, 02 May 2025 15:17:57 GMT
 recorded_with: VCR 6.3.1

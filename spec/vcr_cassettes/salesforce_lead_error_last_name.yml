@@ -8,7 +8,7 @@ http_interactions:
       string: '{"LastName":"Test"}'
     headers:
       Authorization:
-      - Bearer 00D8a000003BvM7!ARwAQKpLE43ltOwOMBVknjErIjaEcP3VgH7KrB2YRoy5lNjS.HnbQEhpZqFzECLX8Uvn2z3VfOTt2I_LlYlJwnM_6fJxqD7K
+      - Bearer 00D8a000003BvM7!ARwAQFv4x9FySKf1rupwdv29J6YeNkVKxILADXHygYI30ZWiptapx73zyORBOjwIfjM44Mai9aaxCu1Nrt_qKiMoDDojztY9
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,13 +23,13 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 23 Feb 2025 17:23:31 GMT
+      - Fri, 02 May 2025 15:17:56 GMT
       Set-Cookie:
-      - BrowserId=5xCwz_IKEe-fv72xQ_vdcQ; domain=.salesforce.com; path=/; expires=Mon,
-        23-Feb-2026 17:23:31 GMT; Max-Age=31536000; secure; SameSite=None
-      - CookieConsentPolicy=0:1; path=/; expires=Mon, 23-Feb-2026 17:23:31 GMT; Max-Age=31536000;
+      - BrowserId=oBUudydoEfCYasECpI8kUQ; domain=.salesforce.com; path=/; expires=Sat,
+        02-May-2026 15:17:56 GMT; Max-Age=31536000; secure; SameSite=None
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 02-May-2026 15:17:56 GMT; Max-Age=31536000;
         secure
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Mon, 23-Feb-2026 17:23:31
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 02-May-2026 15:17:56
         GMT; Max-Age=31536000; secure
       X-Content-Type-Options:
       - nosniff
@@ -40,13 +40,14 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Sforce-Limit-Info:
-      - api-usage=76/15000
+      - api-usage=16/15000
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
-      string: '[{"message":"Required fields are missing: [Company]","errorCode":"REQUIRED_FIELD_MISSING","fields":["Company"]}]'
-  recorded_at: Sun, 23 Feb 2025 17:23:31 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sibWVzc2FnZSI6IkNhbXBvcyBvYnJpZ2F0w7NyaW9zIGF1c2VudGVzOiBbQ29tcGFueV0iLCJlcnJvckNvZGUiOiJSRVFVSVJFRF9GSUVMRF9NSVNTSU5HIiwiZmllbGRzIjpbIkNvbXBhbnkiXX1d
+  recorded_at: Fri, 02 May 2025 15:17:56 GMT
 recorded_with: VCR 6.3.1
