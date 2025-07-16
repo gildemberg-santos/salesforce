@@ -277,12 +277,22 @@ module Salesforce
     #
     # @return [Hash] Um hash que representa a enumeração do picklist.
     def create_enum(picklistvalues)
-      picklist = { "enum" => [""], "default" => "", "showCustomVariables" => true }
-      picklistvalues.map do |value|
-        picklist["default"] = value["value"] if value["defaultValue"] == true
-        picklist["enum"].append(value["value"])
+      enum_values = [""]
+      default_value = ""
+
+      picklistvalues.each do |value|
+        enum_value = value["value"]
+        next if enum_value.blank? || enum_values.include?(enum_value)
+
+        enum_values << enum_value
+        default_value = enum_value if value["defaultValue"]
       end
-      picklist
+
+      {
+        "enum" => enum_values,
+        "default" => default_value,
+        "showCustomVariables" => true,
+      }
     end
   end
 end
