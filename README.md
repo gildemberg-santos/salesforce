@@ -85,6 +85,18 @@ Para iniciar um console interativo com o ambiente carregado:
 bin/console
 ```
 
+### Rodando os testes
+
+A suíte usa [VCR](https://github.com/vcr/vcr) e roda sem nenhuma credencial:
+
+```bash
+bundle exec rspec
+```
+
+Os cassettes em `spec/vcr_cassettes/` guardam apenas placeholders (`<CLIENT_ID>`, `<ACCESS_TOKEN>`, `<INSTANCE_URL>`...), e o `spec/spec_helper.rb` remove tokens e URLs da org antes de qualquer gravação.
+
+Para regravar um cassette contra uma org real, copie `spec/config.exemplo.yaml` para `spec/config.yaml` (ignorado pelo Git) ou defina as variáveis `SALESFORCE_<CHAVE>` (ex.: `SALESFORCE_CLIENT_ID`), apague o cassette e rode a suíte. Revise o diff antes de commitar.
+
 ### Instalando localmente
 
 Para instalar a gem localmente:

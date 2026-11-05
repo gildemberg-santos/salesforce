@@ -20,7 +20,7 @@ module Salesforce
   #
   # @param [String] value O novo valor para o ID do cliente.
   def self.client_id=(value)
-    @client_id ||= value
+    @client_id = value
   end
 
   # Retorna o ID do cliente.
@@ -34,7 +34,7 @@ module Salesforce
   #
   # @param [String] value O novo valor para o segredo do cliente.
   def self.client_secret=(value)
-    @client_secret ||= value
+    @client_secret = value
   end
 
   # Retorna o segredo do cliente.
@@ -48,7 +48,7 @@ module Salesforce
   #
   # @param [String] value O novo valor para o URI de redirecionamento.
   def self.redirect_uri=(value)
-    @redirect_uri ||= value
+    @redirect_uri = value
   end
 
   # Retorna o URI de redirecionamento.
@@ -62,7 +62,7 @@ module Salesforce
   #
   # @param [String] value O novo valor para o nome de usuário.
   def self.username=(value)
-    @username ||= value
+    @username = value
   end
 
   # Retorna o nome de usuário.
@@ -76,7 +76,7 @@ module Salesforce
   #
   # @param [String] value O novo valor para a senha.
   def self.password=(value)
-    @password ||= value
+    @password = value
   end
 
   # Retorna a senha.
@@ -90,7 +90,7 @@ module Salesforce
   #
   # @param [String] value O novo valor para o token de segurança.
   def self.security_token=(value)
-    @security_token ||= value
+    @security_token = value
   end
 
   # Retorna o token de segurança.

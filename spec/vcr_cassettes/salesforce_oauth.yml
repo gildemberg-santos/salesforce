@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://login.salesforce.com/services/oauth2/token?client_id=3MVG9FMtW0XJDLd1psJwzxdJ1VGw1KYONP1dTzNOlzRDoWgs_t6SD3pBh64.Ssq.EVXAKEae5Xoa3KUU9QUWQ&client_secret=4289401D2FB65104F439D333E0542C8E8DD004A63F3B1AAE28FCA339A99F93FC&grant_type=password&password=tytvuv-fyQhiz-8watha4KbrRJ8o7MS8AoXePebcr73F6&username=gildemberg_santos@hotmail.com
+    uri: https://login.salesforce.com/services/oauth2/token?client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>&grant_type=password&password=<PASSWORD><SECURITY_TOKEN>&username=<USERNAME>
     body:
       encoding: UTF-8
       string: ''
@@ -25,7 +25,7 @@ http_interactions:
       Date:
       - Fri, 02 May 2025 15:17:57 GMT
       Set-Cookie:
-      - BrowserId=oKYjfidoEfCBjGvzIJ0XQQ; domain=.salesforce.com; path=/; expires=Sat,
+      - BrowserId=<BROWSER_ID>; domain=.salesforce.com; path=/; expires=Sat,
         02-May-2026 15:17:57 GMT; Max-Age=31536000; secure; SameSite=None
       - CookieConsentPolicy=0:0; path=/; expires=Sat, 02-May-2026 15:17:57 GMT; Max-Age=31536000;
         secure
@@ -49,6 +49,6 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D8a000003BvM7!ARwAQFv4x9FySKf1rupwdv29J6YeNkVKxILADXHygYI30ZWiptapx73zyORBOjwIfjM44Mai9aaxCu1Nrt_qKiMoDDojztY9","instance_url":"https://leadster5-dev-ed.my.salesforce.com","id":"https://login.salesforce.com/id/00D8a000003BvM7EAK/0058a00000LryhyAAB","token_type":"Bearer","issued_at":"1746199077570","signature":"5SoylKivweUJF3tKx5l11WNwrujin00XKMbeGftt8Bs="}'
+      string: '{"access_token":"<ACCESS_TOKEN>","instance_url":"<INSTANCE_URL>","id":"https://login.salesforce.com/id/00D000000000000AAA/005000000000000AAA","token_type":"Bearer","issued_at":"1746199077570","signature":"<SIGNATURE>"}'
   recorded_at: Fri, 02 May 2025 15:17:57 GMT
 recorded_with: VCR 6.3.1
