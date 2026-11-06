@@ -2,35 +2,37 @@
 
 [![Build Status](https://github.com/gildemberg-santos/salesforce/actions/workflows/main.yml/badge.svg)](https://github.com/gildemberg-santos/salesforce/actions)
 
-Uma gem Ruby para facilitar a integração com a API do Salesforce.
+[Português](README.pt-BR.md)
 
-Este projeto tem como objetivo fornecer uma interface simples e eficiente para autenticação, consultas e manipulação de dados via Salesforce.
+A Ruby gem that makes it easy to integrate with the Salesforce API.
+
+It provides a simple, efficient interface for authentication, queries and data manipulation through Salesforce.
 
 ---
 
-## 📦 Instalação
+## 📦 Installation
 
-### Adicionando ao Gemfile
+### Add it to your Gemfile
 
 ```ruby
 gem 'salesforce'
 ```
 
-Depois, execute:
+Then run:
 
 ```bash
 bundle install
 ```
 
-### Ou instalação manual
+### Or install it manually
 
 ```bash
 gem install salesforce
 ```
 
-### Dependência do sistema
+### System dependency
 
-> **Importante:** Para sistemas baseados em Debian/Ubuntu, é necessário instalar o `ruby-dev`:
+> **Important:** on Debian/Ubuntu-based systems you need `ruby-dev`:
 
 ```bash
 sudo apt install ruby-dev
@@ -38,17 +40,17 @@ sudo apt install ruby-dev
 
 ---
 
-## 🚀 Uso
+## 🚀 Usage
 
-### Console Interativo
+### Interactive console
 
-Execute o seguinte comando para iniciar um prompt interativo com a gem carregada:
+Start an interactive prompt with the gem loaded:
 
 ```bash
 bin/console
 ```
 
-### Exemplo de utilização
+### Example
 
 ```ruby
 require 'salesforce'
@@ -60,75 +62,73 @@ client = Salesforce::Client.new(
   password: ENV['SALESFORCE_PASSWORD']
 )
 
-# Exemplo de query
+# Query example
 result = client.query("SELECT Id, Name FROM Account LIMIT 10")
 puts result
 ```
 
-> Mais exemplos de uso estarão disponíveis em breve.
+> More usage examples coming soon.
 
 ---
 
-## 🛠 Desenvolvimento
+## 🛠 Development
 
-### Clonando e configurando o projeto
+### Clone and set up
 
-Após clonar o repositório, execute:
+After cloning the repository, run:
 
 ```bash
 bin/setup
 ```
 
-Para iniciar um console interativo com o ambiente carregado:
+To open an interactive console with the environment loaded:
 
 ```bash
 bin/console
 ```
 
-### Rodando os testes
+### Running the tests
 
-A suíte usa [VCR](https://github.com/vcr/vcr) e roda sem nenhuma credencial:
+The suite uses [VCR](https://github.com/vcr/vcr) and runs without any credentials:
 
 ```bash
 bundle exec rspec
 ```
 
-Os cassettes em `spec/vcr_cassettes/` guardam apenas placeholders (`<CLIENT_ID>`, `<ACCESS_TOKEN>`, `<INSTANCE_URL>`...), e o `spec/spec_helper.rb` remove tokens e URLs da org antes de qualquer gravação.
+The cassettes in `spec/vcr_cassettes/` contain only placeholders (`<CLIENT_ID>`, `<ACCESS_TOKEN>`, `<INSTANCE_URL>`...), and `spec/spec_helper.rb` strips tokens and org URLs before anything is recorded.
 
-Para regravar um cassette contra uma org real, copie `spec/config.exemplo.yaml` para `spec/config.yaml` (ignorado pelo Git) ou defina as variáveis `SALESFORCE_<CHAVE>` (ex.: `SALESFORCE_CLIENT_ID`), apague o cassette e rode a suíte. Revise o diff antes de commitar.
+To re-record a cassette against a real org, copy `spec/config.exemplo.yaml` to `spec/config.yaml` (ignored by Git) or set the `SALESFORCE_<KEY>` variables (e.g. `SALESFORCE_CLIENT_ID`), delete the cassette and run the suite. Review the diff before committing.
 
-### Instalando localmente
-
-Para instalar a gem localmente:
+### Installing locally
 
 ```bash
 bundle exec rake install
 ```
 
-### Publicando nova versão
+### Releasing a new version
 
-1. Atualize a versão em `lib/salesforce/version.rb`
-2. Execute:
+1. Update the version in `lib/salesforce/version.rb`
+2. Run:
 
 ```bash
 bundle exec rake release
 ```
 
-Este comando:
-- Cria uma nova tag no Git
-- Envia os commits e a tag para o GitHub
-- Publica a nova versão no [RubyGems.org](https://rubygems.org)
+This command:
+- Creates a Git tag for the new version
+- Pushes the commits and the tag to GitHub
+- Publishes the new version to [RubyGems.org](https://rubygems.org)
 
 ---
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Relatórios de bugs e pull requests são bem-vindos no [repositório do GitHub](https://github.com/gildemberg-santos/salesforce).
+Bug reports and pull requests are welcome on the [GitHub repository](https://github.com/gildemberg-santos/salesforce).
 
-Este projeto segue um ambiente de colaboração saudável e respeitosa. Consulte o nosso [Código de Conduta](https://github.com/gildemberg-santos/salesforce/blob/master/CODE_OF_CONDUCT.md) para mais informações.
+This project is meant to be a safe, welcoming space for collaboration. See the [Code of Conduct](https://github.com/gildemberg-santos/salesforce/blob/master/CODE_OF_CONDUCT.md).
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto é licenciado sob a licença [MIT](https://opensource.org/licenses/MIT).
+Released under the [MIT License](https://opensource.org/licenses/MIT).
